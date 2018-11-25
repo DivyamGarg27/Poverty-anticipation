@@ -51,11 +51,13 @@ Developmental parameters are not only related to “direct” features such as r
 
 Use these commands to generate predictions from the three models mentioned earlier and calculate correlation, accuracy, precision and recall on the dataset provided in this repository.
 
-First, clone the repository or download it as a <a href="https://github.com/agarwalt/satimage/archive/master.zip" target="_blank">zip file</a>. To clone:
+First, clone the repository 
+To clone:
 
 ```bash
 git clone "https://github.com/DivyamGarg27/Poverty-anticipation.git"
-then change the name of folder 'Poverty-anticipation' to 'minor' 
+then change the name of folder 'Poverty-anticipation' to 'minor'
+
 cd minor
 ```
 
@@ -66,7 +68,7 @@ pip install -r requirements.txt
 
 ##### Predicting developmental parameters
 
-1. The file <a href="data/region_info.csv" target="_blank">data/region_info.csv</a> contains the centre latitudes and longitudes for some regions from our complete dataset. Use Google's Static Maps API (https://developers.google.com/maps/documentation/static-maps/) to download 1920x1920 satellite images for these regions at the 16 zoom level. The name of each image should be `<region_code>.png`. For example, for the region with `region_code = 12345`, the name of the corresponding image file should be `12345.png`.
+1. The file <a href="data/region_info.csv" target="_blank">data/region_info.csv</a> contains the centre latitudes and longitudes for some regions from our complete dataset. Use mappuzzle.exe (Download mappuzzle.exe from "http://www.mappuzzle.se/download.php") to download 1920x1920 satellite images for these regions at the 16 zoom level. The name of each image should be `<region_code>.png`. For example, for the region with `region_code = 12345`, the name of the corresponding image file should be `12345.png`.
 2. Download the multi-task model's <a href="https://www.dropbox.com/s/187e6zp2or2s9ni/best_model_weights.h5?dl=0" target="_blank">weights</a> and place the downloaded file in the `models/developmental` folder.
 3. Change the working directory (`cd code`) and launch an interactive python shell (e.g. `ipython`).
 4. Load the weights from the downloaded file: 
@@ -106,7 +108,7 @@ Vary the `layer_index`, `filter_index` and `input_img_path` variables to see res
 ##### Predicting income level and poverty
 
 1. Download model weights, <a href="https://www.dropbox.com/s/ml3hkms3nlx0k0u/best_model_weights.h5?dl=0" target="_blank">model P.D.</a> and <a href="https://www.dropbox.com/s/jk6xhloa6946y9s/best_model_weights.h5?dl=0" target="_blank">model C.D.</a>, and place the downloaded files in `models/income_poverty_pd` and `models/income_poverty_cd` respectively.
-3. Change the working directory (`cd code`) and launch an interactive python shell (e.g. `ipython`).
+3. Change the working directory (`cd codes`) and launch an interactive python shell (e.g. `ipython`).
 4. Load the models's weights: 
    ```python
    import utility
