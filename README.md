@@ -13,16 +13,11 @@
 |
 <b><a href="#acknowledgements">Acknowledgements</a></b>
 </p>
-
-<a href="https://github.com/DivyamGarg27/Poverty-anticipation">
-<div align="center">
-	<img src="readme_images/header_img.png">
-</div>
-</a><br>
+<br>
 
 #### Introduction
 
-This repository accompanies our publication <a href="https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/16441" target="_blank">"Multi-Task Deep Learning for Predicting Poverty From Satellite Images"</a> (AAAI Conference on Innovative Applications of Artificial Intelligence: IAAI 2018), and contains the code and model weights for two prediction tasks:
+This repository contains the code and model weights for these prediction tasks:
 
 1. Predict, using a multi-task fully convolutional deep neural network (<a href="models/developmental/model.png" target="_blank">PNG</a>, <a href="models/developmental/best_model_architecture.json" target="_blank">JSON</a>, <a href="https://www.dropbox.com/s/187e6zp2or2s9ni/best_model_weights.h5?dl=0" target="_blank">Weights</a>), three developmental parameters -- the main material of the roof, source of lighting and source of drinking water -- from satellite imagery.
 
@@ -56,18 +51,9 @@ We obtained the Census of India (2011) data from these websites:
 
 We utilized Google's Geocoding API (https://developers.google.com/maps/documentation/geocoding/) to obtain coordinates of the center of a region from its address in the census data.  
 
-Further, we used Google Static Maps API (https://developers.google.com/maps/documentation/static-maps/) to extract 1920x1920 satellite images for the villages at the "16" zoom level.
+Further, we used mappuzzle.exe to extract 1920x1920 satellite images for the villages at the "16" zoom level.
 
 We provide a small subset of our dataset in this repository to test all three models.
-
-#### Sample Images
-
-Sample satellite images of parts of six different regions are shown below. Labels indicate the percentage of households with a particular roof type, source of lighting or source of drinking water. The satellite images in the paper are scaled down to fit the paper width. Zooming to true size makes, roads, roof types and farms distinctly visible.
-
-<div align="center">
-	<img src="readme_images/sample_images.png">
-</div>
-<br>
 
 Developmental parameters are not only related to “direct” features such as roofs and settlements, but also to “indirect” features such as roads and farmlands. For instance, the presence of roads is correlated with high electrification.
 
@@ -94,13 +80,13 @@ pip install -r requirements.txt
 3. Change the working directory (`cd code`) and launch an interactive python shell (e.g. `ipython`).
 4. Load the weights from the downloaded file: 
    ```python
-   import util
-   model = util.restore_model('../models/developmental/best_model_architecture.json', '../models/developmental/best_model_weights.h5')
+   import utility
+   model = utility.restore_model('../models/developmental/best_model_architecture.json', '../models/developmental/best_model_weights.h5')
    ``` 
 5. Next, generate and save predictions of developmental parameters from the downloaded images.
    ```python
-   import satimage
-   satimage.generate_predictions(model, '../images', '../data/predicted_developmental.csv')
+   import satpredict
+   satpredict.generate_predictions(model, '../images', '../data/predicted_developmental.csv')
    ```
    
    Here, `../images` is the directory where the satellite images are placed. 
@@ -114,12 +100,12 @@ pip install -r requirements.txt
 Load the multi-task model using steps `1-4`, as necessary, in the previous section. To see and save filter responses for a particular region and convolutional layer, execute:
 
 ```python
-import satimage
+import satpredict
 layer_index = 19
 filter_index = None
 input_img_path = '../images/12345.png'
 save_dir = '../images'
-satimage.show_filter_responses(model, layer_index, input_img_path, save_dir, filter_index)
+satpredict.show_filter_responses(model, layer_index, input_img_path, save_dir, filter_index)
 ```
 
 A copy of the filter responses will be saved in `save_dir`.
@@ -132,15 +118,15 @@ Vary the `layer_index`, `filter_index` and `input_img_path` variables to see res
 3. Change the working directory (`cd code`) and launch an interactive python shell (e.g. `ipython`).
 4. Load the models's weights: 
    ```python
-   import util
-   model_pd = util.restore_model('../models/income_poverty_pd/best_model_architecture.json', '../models/income_poverty_pd/best_model_weights.h5')
-   model_cd = util.restore_model('../models/income_poverty_cd/best_model_architecture.json', '../models/income_poverty_cd/best_model_weights.h5')
+   import utility
+   model_pd = utility.restore_model('../models/income_poverty_pd/best_model_architecture.json', '../models/income_poverty_pd/best_model_weights.h5')
+   model_cd = utility.restore_model('../models/income_poverty_cd/best_model_architecture.json', '../models/income_poverty_cd/best_model_weights.h5')
    ``` 
 5. Generate and save predictions of income levels from the developmental parameters (generated in the previous section) using:
    ```python
-   import secc
-   secc.generate_predictions(model_pd, '../data/predicted_developmental.csv', '../data/region_info.csv', '../data/pd_subdistrict_income.csv')
-   secc.generate_predictions(model_cd, '../data/data_developmental.csv', '../data/region_info.csv', '../data/cd_subdistrict_income.csv')
+   import devpredict
+   devpredict.generate_predictions(model_pd, '../data/predicted_developmental.csv', '../data/region_info.csv', '../data/pd_subdistrict_income.csv')
+   devpredict.generate_predictions(model_cd, '../data/data_developmental.csv', '../data/region_info.csv', '../data/cd_subdistrict_income.csv')
    ```
    
    The predictions of income levels using predicted developmental parameters will be written to `data/pd_subdistrict_income.csv`. The predictions of income levels using actual values of the developmental parameters will be written to `data/cd_subdistrict_income.csv`.
@@ -149,8 +135,8 @@ Vary the `layer_index`, `filter_index` and `input_img_path` variables to see res
 
 6. To compare the predicted income levels above against ground truth values, and to calculate the accuracy of povery prediction, use:
    ```python
-   secc.compare_income_predictions('../data/data_subdistrict_income.csv', '../data/pd_subdistrict_income.csv')  # For model trained on predicted data, model P.D.
-   secc.compare_income_predictions('../data/data_subdistrict_income.csv', '../data/cd_subdistrict_income.csv')  # For model trained on census data, model C.D.
+   devpredict.compare_income_predictions('../data/data_subdistrict_income.csv', '../data/pd_subdistrict_income.csv')  # For model trained on predicted data, model P.D.
+   devpredict.compare_income_predictions('../data/data_subdistrict_income.csv', '../data/cd_subdistrict_income.csv')  # For model trained on census data, model C.D.
    ```
 
 #### Learning Curve
@@ -203,4 +189,4 @@ In contrast to the activations for shared layers' filters, the activations for t
 
 #### Acknowledgements
 
-The authors are grateful to NVIDIA Corporation for donating the TITAN X GPUs used for this research.
+
