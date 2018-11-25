@@ -45,8 +45,6 @@ We utilized Google's Geocoding API to obtain coordinates of the center of a regi
 
 Further, we used mappuzzle.exe to extract 1920x1920 satellite images for the villages at the "16" zoom level.
 
-We provide a small subset of our dataset in this repository to test all three models.
-
 Developmental parameters are not only related to “direct” features such as roofs and settlements, but also to “indirect” features such as roads and farmlands. For instance, the presence of roads is correlated with high electrification.
 
 #### Code
