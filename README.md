@@ -3,16 +3,7 @@
 |
 <b><a href="#data-sources">Data Sources</a></b>
 |
-<b><a href="#sample-images">Sample Images</a></b>
-|
 <b><a href="#code">Code</a></b>
-|
-<b><a href="#filter-responses">Filter Responses</a></b>
-|
-<b><a href="#learning-curve">Learning Curve</a></b>
-|
-<b><a href="#acknowledgements">Acknowledgements</a></b>
-</p>
 <br>
 
 #### Introduction
@@ -21,7 +12,7 @@ This repository contains the code and model weights for these prediction tasks:
 
 1. Predict, using a multi-task fully convolutional deep neural network (<a href="models/developmental/model.png" target="_blank">PNG</a>, <a href="models/developmental/best_model_architecture.json" target="_blank">JSON</a>, <a href="https://www.dropbox.com/s/187e6zp2or2s9ni/best_model_weights.h5?dl=0" target="_blank">Weights</a>), three developmental parameters -- the main material of the roof, source of lighting and source of drinking water -- from satellite imagery.
 
-	Following are the categories for each of the three tasks in the multi-task model. The multi-task model outputs 24 values (9 for roof type, 6 for source of lighting and 9 for source of drinking water) as three probability distributions, one distribution per task.
+	Following are the categories for each of the three tasks in the multi-task model. The multi-task model outputs 25 values (9 for roof type, 6 for source of lighting and 10 for source of drinking water) as three probability distributions, one distribution per task.
 
 	| # | Roof Type        			| Lighting Source           		| Drinking Water Source   	|
 	| - | --------------------------------- | ------------------------------------- | ----------------------------- |
@@ -32,8 +23,9 @@ This repository contains the code and model weights for these prediction tasks:
 	| 5 | Burnt brick      			| Any other 				| Handpump	 		|
 	| 6 | Stone/slate      			| No lighting 				| Tubewell/borehole 		|
 	| 7 | G.I./metal/asbestos      		| 	 				| River/canal	 		|
-	| 8 | Concrete      			| 	 				| Tank/pond/lake 		|
-	| 9 | Any other material      		| 	 				| Other source	 		|
+	| 8 | Concrete      			| 	 				| Tank/pond/lake		| 
+	| 9 | Any other material		|					| Spring			|
+	|   |			      		| 	 				| Other source	 		|
 	
 
 2. Predict, using a simple four-layer fully-connected neural network (<a href="models/income_poverty_pd/model.png" target="_blank">PNG</a>, <a href="models/income_poverty_pd/best_model_architecture.json" target="_blank">JSON</a>, <a href="https://www.dropbox.com/s/ml3hkms3nlx0k0u/best_model_weights.h5?dl=0" target="_blank">Weights</a>), the income levels (a direct indicator of poverty) using the predicted developmental parameter outputs of the first (multi-task) model -- model P.D., trained on predicted data.
@@ -138,55 +130,4 @@ Vary the `layer_index`, `filter_index` and `input_img_path` variables to see res
    devpredict.compare_income_predictions('../data/data_subdistrict_income.csv', '../data/pd_subdistrict_income.csv')  # For model trained on predicted data, model P.D.
    devpredict.compare_income_predictions('../data/data_subdistrict_income.csv', '../data/cd_subdistrict_income.csv')  # For model trained on census data, model C.D.
    ```
-
-#### Learning Curve
-
-The figure below shows the average training and validation loss for the three tasks in the multi-task model. The minimum validation loss occurs at the last step in the graph. Further training leads to overfitting.
-
-<div align="center">
-	<img src="readme_images/training_validation_error.png">
-</div>
-<br>
-
-#### Filter Responses
-
-We provide filter responses for our first (multi-task) model.
-
-##### Shared Layers
-
-In the multi-task model's first block, consistent with the observations reported in the literature, filters learn edges with different orientations. The figure below shows differently oriented edges for different filters for a particular region.
-
-<div align="center">
-	<img src="filter_responses/shared_1.png">
-</div>
-<br>
-
-##### Task-specific Layers
-
-The following figures illustrate the filter responses for the task specific branches for each of the three tasks in the multi-task model. In each figure, the larger images show different areas of two regions (`A` and `B`). The smaller images show filter activations for: 
-
-1. Roof type 
-2. Source of lighting, and,
-3. Source of drinking water. 
-
-In contrast to the activations for shared layers' filters, the activations for the task-specific branches in the multi-task model highlight objects of relevance to the respective tasks.
-
-<div align="center">
-	<img src="filter_responses/task_specific_1.png">
-</div>
-<br>
-
-<div align="center">
-	<img src="filter_responses/task_specific_2.png">
-</div>
-<br>
-
-<div align="center">
-	<img src="filter_responses/task_specific_3.png">
-</div>
-<br>
-
-
-#### Acknowledgements
-
 
