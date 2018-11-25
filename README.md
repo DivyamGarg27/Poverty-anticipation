@@ -25,7 +25,7 @@ This repository contains the code and model weights for these prediction tasks:
 	| 7 | G.I./metal/asbestos      		| 	 				| River/canal	 		|
 	| 8 | Concrete      			| 	 				| Tank/pond/lake		| 
 	| 9 | Any other material		|					| Spring			|
-	|   |			      		| 	 				| Other source	 		|
+	|10 |			      		| 	 				| Other source	 		|
 	
 
 2. Predict, using a simple four-layer fully-connected neural network (<a href="models/income_poverty_pd/model.png" target="_blank">PNG</a>, <a href="models/income_poverty_pd/best_model_architecture.json" target="_blank">JSON</a>, <a href="https://www.dropbox.com/s/ml3hkms3nlx0k0u/best_model_weights.h5?dl=0" target="_blank">Weights</a>), the income levels (a direct indicator of poverty) using the predicted developmental parameter outputs of the first (multi-task) model -- model P.D., trained on predicted data.
@@ -56,8 +56,9 @@ Use these commands to generate predictions from the three models mentioned earli
 First, clone the repository or download it as a <a href="https://github.com/agarwalt/satimage/archive/master.zip" target="_blank">zip file</a>. To clone:
 
 ```bash
-git clone "https://github.com/agarwalt/satimage.git"
-cd satimage
+git clone "https://github.com/DivyamGarg27/Poverty-anticipation.git"
+then change the name of folder 'Poverty-anticipation' to 'minor' 
+cd minor
 ```
 
 Next, install the required python packages: 
