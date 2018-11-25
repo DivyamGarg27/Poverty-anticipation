@@ -14,7 +14,7 @@
 <b><a href="#acknowledgements">Acknowledgements</a></b>
 </p>
 
-<a href="https://github.com/agarwalt/satimage">
+<a href="https://github.com/DivyamGarg27/Poverty-anticipation">
 <div align="center">
 	<img src="readme_images/header_img.png">
 </div>
